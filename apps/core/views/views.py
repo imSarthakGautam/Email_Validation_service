@@ -6,7 +6,7 @@ from rest_framework import status
 
 # import serializer, service function
 from ..serializers import SingleEmailSerializer, BatchEmailSerializer
-from ..services import validate_single_email, validate_batch_emails
+from ..services.email_validation import validate_single_email, validate_batch_emails
 
 
 class SingleEmailValidationView(APIView):
