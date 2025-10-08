@@ -194,18 +194,13 @@ For batch inputs:
 * **Scalability**
 
   * Batch validation via Celery or RQ background jobs.
-  * Rate-limit API to prevent abuse.
-  * Cache DNS results in Redis.
+
 
 * **DRF Serializer Role**
 
   * Input: ensures list of valid email strings.
   * Output: defines consistent JSON structure.
 
-* **Logging/Debug Tip**
-
-  * DNS query responses → loop over `.strings`, `.exchange`, `.preference`
-  * Always `.decode()` TXT byte strings before JSON dumping.
 
 ---
 
