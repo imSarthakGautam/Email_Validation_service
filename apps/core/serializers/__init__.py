@@ -1,2 +1,2 @@
-from .single_email_validation import SingleEmailSerializer
-from .batch_email_validation import BatchEmailSerializer
+from .single_email_validation import SingleEmailSerializer, EmailValidationResult, EmailValidationResultSerializer
+from .batch_email_validation import BatchEmailSerializer, BatchJobSerializer, BatchEmailResultSerializer
