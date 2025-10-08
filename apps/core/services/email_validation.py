@@ -12,13 +12,16 @@ def validate_single_email(email:str)-> dict:
     result = {
        "email": email,
         "format_valid": False,
+
         "domain": None,
-        "domain_valid": False,
-        "mx_found": False,
-        "smtp_status": "unverified",
-        "spf_valid": None,
-        "dkim_valid": None,
-        "dmarc_valid": None,
+        # "domain_valid": False,
+        "mx_records": None,
+        "smtp_status": None,
+
+        "spf_valid": False,
+        "dkim_valid": False,
+        "dmarc_valid": False,
+
         "status": "unknown"
     }
 
