@@ -10,7 +10,10 @@ def save_email_validation_result(email, result_dict):
 
     # Create or update
     if existing:
-        serializer = EmailValidationResultSerializer(existing, data=result_dict, partial=True)
+        for key, value in result_dict.items():
+            setattr(existing, key, value)
+        existing.save()
+        return existing
     else:
         serializer = EmailValidationResultSerializer(data=result_dict)
 
@@ -24,7 +27,7 @@ def link_batch_result(batch_job, email_result):
     """
     Link validated email with its batch job record.
     """
-    data = {"batch_job": batch_job.id, "email_result": email_result.id}
+    data = {"batch_job": batch_job, "email_result": email_result}
     serializer = BatchEmailResultSerializer(data=data)
     serializer.is_valid(raise_exception=True)
     serializer.save()

@@ -64,7 +64,7 @@ class BatchEmailValidationView(APIView):
             total_emails= len(emails),
             status="PENDING"
         )
-
+        print('API endpoint hit')
         process_batch_job.delay(job_id, emails) # run asynchronously via .delay
 
         results = validate_batch_emails(emails) # dispatch Celery Task

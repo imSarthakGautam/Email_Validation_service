@@ -6,7 +6,7 @@ DEEP VALIDATION LAYER
 import dns.resolver
 
 # sender policy framework
-def get_spf_record(domain):
+def get_spf_valid(domain):
     """
     Purpose : Prevents spammers from sending emails using your domain (spoofing).
     Why needed : Shows whether the domain enforces sender authentication (good reputation indicator).
@@ -22,7 +22,7 @@ def get_spf_record(domain):
     return False
 
 # domain Keys Identified Mail
-def get_dkim_record(domain):
+def get_dkim_valid(domain):
     """
     Purpose: Adds a cryptographic signature to emails to ensure message integrity and authenticity.
     Why needed: Verifies the sender and message werent tampered with — another trust signal.
@@ -42,7 +42,7 @@ def get_dkim_record(domain):
     return False
 
 # Domain Based Message Authentication, Reporting and Conformance
-def get_dmarc_record(domain):
+def get_dmarc_valid(domain):
     """
     Purpose: Defines a policy that tells receiving mail servers what to do when SPF/DKIM fail.
     Why needed: Protects the domains reputation and prevents phishing attacks using its name

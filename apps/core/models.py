@@ -16,9 +16,9 @@ class EmailValidationResult(models.Model):
     mx_records = models.JSONField(blank=True, null=True)     # store list of MX records
     smtp_status = models.CharField(max_length=100, blank=True, null=True)
 
-    spf_record = models.CharField(max_length=100, blank=True, null=True)
-    dkim_record = models.CharField(max_length=100, blank=True, null=True)
-    dmarc_record = models.CharField(max_length=100, blank=True, null=True)
+    spf_valid = models.BooleanField(default=False)
+    dkim_valid = models.BooleanField(default=False)
+    dmarc_valid = models.BooleanField(default=False)
     
     status = models.CharField(max_length=255, blank=True, null=True)  # e.g. 'Invalid format', 'No MX record', etc.
 
@@ -47,6 +47,7 @@ class BatchJob(models.Model):
     total_emails = models.IntegerField(default=0)
     completed_emails = models.IntegerField(default=0)
 
+    started_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(blank=True, null=True)
 

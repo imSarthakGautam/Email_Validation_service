@@ -1,7 +1,7 @@
 #from .email_validation import validate_single_email, validate_batch_emails
 from .format_validation import is_email_format_valid, extract_domain_from_email
 from .dns_smtp_service import get_mx_records, smtp_verify_email
-from .domain_auth_service import  get_dkim_record, get_dmarc_record, get_spf_record
+from .domain_auth_service import  get_dkim_valid, get_dmarc_valid, get_spf_valid
 
 
 def validate_single_email(email:str)-> dict:
@@ -16,9 +16,9 @@ def validate_single_email(email:str)-> dict:
         "domain_valid": False,
         "mx_found": False,
         "smtp_status": "unverified",
-        "spf_record": None,
-        "dkim_record": None,
-        "dmarc_record": None,
+        "spf_valid": None,
+        "dkim_valid": None,
+        "dmarc_valid": None,
         "status": "unknown"
     }
 
@@ -55,9 +55,9 @@ def validate_single_email(email:str)-> dict:
         result["smtp_status"] = "un-verfied"
 
     # Verify Domain Authentication Records (spf, dkim, dmarc)
-    result["spf_record"] = get_spf_record(domain)
-    result["dkim_record"] = get_dkim_record(domain)
-    result["dmarc_record"] = get_dmarc_record(domain)
+    result["spf_valid"] = get_spf_valid(domain)
+    result["dkim_valid"] = get_dkim_valid(domain)
+    result["dmarc_valid"] = get_dmarc_valid(domain)
 
 
     # combine and format results into JSON like below format

@@ -20,9 +20,9 @@ class EmailValidationResultSerializer(serializers.ModelSerializer):
             'mx_records',
             'smtp_status',
 
-            'spf_record',
-            'dkim_record',
-            'dmarc_record',
+            'spf_valid',
+            'dkim_valid',
+            'dmarc_valid',
             
             'status',
 
@@ -39,9 +39,9 @@ class EmailValidationResultSerializer(serializers.ModelSerializer):
   "mx_records": ["mx1.example.com", "mx2.example.com"],
    "smtp_status": "valid",
 
-  "spf_record": "valid",
-  "dkim_record": "missing",
-  "dmarc_record": "invalid",
+  "spf_valid": "valid",
+  "dkim_valid": "missing",
+  "dmarc_valid": "invalid",
 
    "status": "SMTP verified",
   

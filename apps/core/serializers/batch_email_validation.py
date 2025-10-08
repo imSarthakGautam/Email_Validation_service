@@ -1,7 +1,8 @@
 
 from rest_framework import serializers
-from ..models import BatchEmailResult, BatchJob
+from ..models import BatchEmailResult, BatchJob, EmailValidationResult
 from .single_email_validation import EmailValidationResultSerializer
+
 
 # class Serializers 1. single  email list
 class BatchEmailSerializer(serializers.Serializer):
@@ -12,10 +13,16 @@ class BatchEmailSerializer(serializers.Serializer):
  
 class BatchEmailResultSerializer(serializers.ModelSerializer):
     # nested serializer ( this email result belongs to this batch)
-    email_result= EmailValidationResultSerializer()
-    class Meta:
+  #  email_result = EmailValidationResultSerializer(read_only=True)
+
+  #  email_result_id = serializers.PrimaryKeyRelatedField(           # for POST
+  #       queryset=EmailValidationResult.objects.all(),
+  #       source='email_result',  # map this to the actual FK field
+  #       write_only=True
+  #   )
+   class Meta:
         model = BatchEmailResult
-        fields = ['id', 'email_result']
+        fields = ['id', 'email_result', 'email_result_id']
 
 
 class BatchJobSerializer(serializers.ModelSerializer):

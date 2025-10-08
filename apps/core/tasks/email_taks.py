@@ -22,18 +22,41 @@ def process_batch_job(self, job_id, emails):
 
         # iterating through each emails
         for email in emails:
-            # validate each email
-            result_dict = validate_single_email(email)
-           
-           # save or update validation result
-            email_result = save_email_validation_result(email, result_dict)
+            try:
+                # validate each email
+                print(f'validating{email}')
+                result_dict = validate_single_email(email)
+                print(f'after validating{email}')
+                # save or update validation result
+                # email_result = save_email_validation_result(email, result_dict)
 
-            # link batch job and individual validation result of email
-            link_batch_result(job, email_result)
+                # # link batch job and individual validation result of email
+                # link_batch_result(job, email_result)
 
-            completed += 1
-            job.completed_emails = completed
-            job.save(update_fields=["completed_emails"])
+
+                existing = EmailValidationResult.objects.filter(email=email).last()
+                if existing:
+                    for key, value in result_dict.items():
+                        setattr(existing, key, value)
+                    existing.save()
+                    email_result = existing
+                else:
+                    email_result = EmailValidationResult.objects.create(**result_dict)
+
+                # Link to BatchEmailResult
+                BatchEmailResult.objects.create(
+                    batch_job=job,
+                    email_result=email_result
+                )
+
+
+                completed += 1
+                job.completed_emails = completed
+                job.save(update_fields=["completed_emails"])
+            except Exception as e:
+                # log the failure, continue with next email
+                print(f"Failed processing {email}: {e}")
+            
 
         job.status = "COMPLETED"
         job.completed_at = timezone.now()
